@@ -5,12 +5,15 @@ const { prompt } = require('inquirer');
 const chalk = require('chalk');
 const sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('token');
-
 global.db = db;
 
 const {
   login
-} = require('./controllers/commands');
+} = require('./controllers/login');
+const {
+  listAllApps
+} = require('./controllers/app');
+
 
 const questions = [
   {
@@ -39,7 +42,18 @@ program
     );
   });
 
-// Assert that a VALID command is provided 
+program
+  .command('apps')
+  .alias('l')
+  .description('list all your apps')
+  .action(() => {
+      return new Promise((resolve,reject) =>{
+         resolve(true);
+      }).then((res) =>{
+        listAllApps()
+      })
+  });
+
 if (!process.argv.slice(2).length || !/[arudl]/.test(process.argv.slice(2))) {
   program.outputHelp();
   process.exit();

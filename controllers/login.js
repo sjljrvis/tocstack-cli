@@ -3,6 +3,7 @@ const login = (loginPayload) => {
 	makeRequest('/login', 'POST', loginPayload)
 		.then((result) => {
 			console.log(result);
+
 			db.serialize(() => {
 				db.run("CREATE TABLE IF NOT EXISTS token(userEmail TEXT, token TEXT ,date TEXT)")
 				db.run("DELETE from token")
@@ -17,7 +18,7 @@ const login = (loginPayload) => {
 					console.log("Notes : \n" + row.userEmail + "\n" + row.token + "\n" + row.date + "\n");
 					console.log("================================================")
 			});
-			})
+			});
 		})
 		.catch((error) => {
 			console.log(error)
