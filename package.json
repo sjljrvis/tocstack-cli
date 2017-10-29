@@ -13,6 +13,10 @@
   },
   "author": "",
   "license": "ISC",
+  "preferGlobal": true,
+  "bin": {
+    "tocstack1": "./index.js"
+  },
   "bugs": {
     "url": "https://github.com/sjljrvis/tocstack-cli/issues"
   },
@@ -21,10 +25,13 @@
     "babel-register": "^6.26.0",
     "body-parser": "^1.18.2",
     "chalk": "^2.1.0",
+    "commander": "^2.11.0",
     "express": "^4.16.2",
+    "inquirer": "^3.3.0",
     "jsonwebtoken": "^8.1.0",
     "mongoose": "^4.12.4",
-    "request": "^2.83.0"
+    "request": "^2.83.0",
+    "sqlite3": "^3.1.13"
   },
   "devDependencies": {
     "babel": "^6.23.0",
