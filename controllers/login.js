@@ -16,7 +16,7 @@ const login = (loginPayload) => {
 				stmt.finalize();
 				db.each("SELECT userEmail,token,date FROM token", (err, row) => {
 					console.log("================================================")
-					console.log("Notes : \n" + row.userEmail + "\n" + row.token + "\n" + row.date + "\n");
+					console.log("Token store : \n" + row.userEmail + "\n" + row.token + "\n" + row.date + "\n");
 					console.log("================================================")
 				});
 			});
