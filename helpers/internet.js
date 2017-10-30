@@ -1,64 +1,63 @@
 const request = require('request');
 const url = 'http://localhost:5555'
-module.exports.makeRequest = (endpoint, method, payload =null) => {
-  setRequestHeader((err, token) => {
-    console.log(err,token)
-    if (err) {
-      console.log(err)
-      // console.log('Login first');
-      // return;
-    }
-    else {
-      let options = {}
-      if (endpoint == "/login") {
-        options = {
-          method: method,
-          uri: url + `${endpoint}`,
-          body: payload,
-          json: true
-        }
-      }
-      else if (method == "GET") {
-        options = {
-          method: method,
-          headers: { "Authorization": "Bearer " + token },
-          uri: url + `${endpoint}`,
-          json: true
-        }
-      }
-      else {
-        options = {
-          method: method,
-          headers: { "Authorization": "Bearer " + token },
-          uri: url + `${endpoint}`,
-          body: payload,
-          json: true
-        }
-      }
-      return new Promise((resolve, reject) => {
-        request(options, (error, response, body) => {
-          console.log(error, body)
-          if (error) {
-            reject({ error: true, data: body });
-          }
-          if (response.statusCode == 200) {
-            resolve({ error: false, data: body });
-          };
-        })
-      })
-    }
-  })
+module.exports.makeRequest = (endpoint, method, payload = null,callback) => {
+	setRequestHeader(endpoint, (err, token) => {
+		if (err) {
+			console.log('Login first');
+			return;
+		}
+		else {
+			let options = {}
+			if (endpoint == "/login") {
+				options = {
+					method: method,
+					uri: url + `${endpoint}`,
+					body: payload,
+					json: true
+				}
+			}
+			else if (method == "GET") {
+				options = {
+					method: method,
+					headers: { "Authorization": "Bearer " + token },
+					uri: url + `${endpoint}`,
+					json: true
+				}
+			}
+			else {
+				options = {
+					method: method,
+					headers: { "Authorization": "Bearer " + token },
+					uri: url + `${endpoint}`,
+					body: payload,
+					json: true
+				}
+			}
+			request(options, (error, response, body) => {
+				if (error) {
+					return callback(true, body);
+				}
+				if (response.statusCode == 200) {
+					callback(false, body);
+				};
+			})
+		}
+	})
 }
 
 
-var setRequestHeader = (callback) => {
-  db.each("SELECT userEmail,token,date FROM token", (err, row) => {
-    console.log(err,row)
-    if (err) {
-      callback(true, null);
-    }
-    else {
-      callback(false, row.token.toString());
-    }
-  });
+var setRequestHeader = (endpoint, callback) => {
+	if (endpoint == '/login') {
+		callback(false, "dummytoken");
+	}
+	else {
+		db.each("SELECT userEmail,token,date FROM token", (err, row) => {
+			if (err) {
+				callback(true, null);
+			}
+			else {
+				callback(false, row.token.toString());
+			}
+		});
+	}
 }

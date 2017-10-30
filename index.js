@@ -6,6 +6,7 @@ const chalk = require('chalk');
 const sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('token');
 global.db = db;
+global.chalk = chalk;
 
 const {
   login
@@ -47,11 +48,7 @@ program
   .alias('l')
   .description('list all your apps')
   .action(() => {
-      return new Promise((resolve,reject) =>{
-         resolve(true);
-      }).then((res) =>{
-        listAllApps()
-      })
+    listAllApps()
   });
 
 if (!process.argv.slice(2).length || !/[arudl]/.test(process.argv.slice(2))) {
