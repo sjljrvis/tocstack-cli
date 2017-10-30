@@ -3,7 +3,9 @@ const url = 'http://localhost:5555'
 module.exports.makeRequest = (endpoint, method, payload = null,callback) => {
 	setRequestHeader(endpoint, (err, token) => {
 		if (err) {
-			console.log('Login first');
+			console.log("\n");
+			console.log(chalk.red.bold('Login first :('));
+			console.log(chalk.green.bold('Use  "tocstack login" to start session'));
 			return;
 		}
 		else {

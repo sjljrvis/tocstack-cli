@@ -7,6 +7,7 @@ const login = (loginPayload) => {
 		else {
 			db.serialize(() => {
 				db.run("CREATE TABLE IF NOT EXISTS token(userEmail TEXT, token TEXT ,date TEXT)")
+				db.run('DELETE from token')
 				let stmt = db.prepare("INSERT INTO token VALUES (?,?,?)");
 				let date = new Date().toLocaleTimeString();
 				let token = result.token;
