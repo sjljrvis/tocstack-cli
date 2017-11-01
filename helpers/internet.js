@@ -1,12 +1,9 @@
 const request = require('request');
 const url = 'http://localhost:5555'
-module.exports.makeRequest = (endpoint, method, payload = null,callback) => {
+module.exports.makeRequest = (endpoint, method, payload = null, callback) => {
 	setRequestHeader(endpoint, (err, token) => {
 		if (err) {
-			console.log("\n");
-			console.log(chalk.red.bold('Login first :('));
-			console.log(chalk.green.bold('Use  "tocstack login" to start session'));
-			return;
+			return callback(true, "token not found");
 		}
 		else {
 			let options = {}
@@ -40,8 +37,13 @@ module.exports.makeRequest = (endpoint, method, payload = null,callback) => {
 					return callback(true, body);
 				}
 				if (response.statusCode == 200) {
-					callback(false, body);
-				};
+					return callback(false, body);
+				}
+				else if (response.statusCode == 401) {
+					return callback(true,"Authetication failure");
+				}
+
+				
 			})
 		}
 	})

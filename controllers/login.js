@@ -1,8 +1,11 @@
 let { makeRequest } = require('../helpers/internet')
 const login = (loginPayload) => {
 	makeRequest('/login', 'POST', loginPayload, (error, result) => {
-		if (error) {
+		if (error && result == null) {
 			console.log(chalk.cyan.bold('Error connecting to tocstack'))
+		}
+		else if(error && result == "Authetication failure"){
+			console.log(chalk.red.bold('Fatal Authentication'))
 		}
 		else {
 			db.serialize(() => {
