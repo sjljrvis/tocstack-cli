@@ -4,7 +4,7 @@ const program = require('commander');
 const { prompt } = require('inquirer');
 const chalk = require('chalk');
 const sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('token');
+var db = new sqlite3.Database('/usr/lib/node_modules/tocstack-cli/token.db');
 global.db = db;
 global.chalk = chalk;
 
