@@ -45,7 +45,12 @@ const fetchAppLogs = (appName) => {
     else {
       spinner.stop(1);
       console.log(chalk.cyan.bold('-----Logs-----'));
-      console.log(chalk.cyan(result))
+      if(result){
+        console.log(chalk.cyan(result))
+      }
+      else{
+        console.log(chalk.cyan.bold("Logs:") + " " + chalk.red.bold("Error !! please try again later"));
+      }
     }
   })
 };
@@ -61,10 +66,15 @@ const fetchAppStatus = (appName) => {
     else {
       spinner.stop(1);
       console.log(chalk.cyan.bold('-----status-----'));
-      console.log(chalk.cyan.bold("Status:") + " " + chalk.cyan(result[0].State.Status));
-      console.log(chalk.cyan.bold("Process ID:") + " " + chalk.cyan(result[0].State.Pid));
-      console.log(chalk.cyan.bold("MAC address:") + " " + chalk.cyan(result[0].NetworkSettings.MacAddress));
-      console.log(chalk.cyan.bold("IP address:") + " " + chalk.cyan(result[0].NetworkSettings.IPAddress))
+      if(result[0]){
+        console.log(chalk.cyan.bold("Status:") + " " + chalk.cyan(result[0].State.Status));
+        console.log(chalk.cyan.bold("Process ID:") + " " + chalk.cyan(result[0].State.Pid));
+        console.log(chalk.cyan.bold("MAC address:") + " " + chalk.cyan(result[0].NetworkSettings.MacAddress));
+        console.log(chalk.cyan.bold("IP address:") + " " + chalk.cyan(result[0].NetworkSettings.IPAddress))
+      }
+      else{
+        console.log(chalk.cyan.bold("Status:") + " " + chalk.red.bold("Error !! please try again later"));
+      }
     }
   })
 };
