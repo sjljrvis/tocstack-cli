@@ -37,7 +37,7 @@ const listAllApps = () => {
 
 const fetchAppLogs = (appName) => {
   spinner.start();
-  makeRequest('/fetchlogs', 'GET', {}, (error, result) => {
+  makeRequest(`/fetchlogs/${appName}`, 'GET', {}, (error, result) => {
     if (error) {
       spinner.stop(1);
       console.log(chalk.red.bold('Error connecting to tocstack'))

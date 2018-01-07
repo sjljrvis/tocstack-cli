@@ -1,5 +1,5 @@
 const request = require('request');
-const url = 'http://localhost:5555'
+const url = 'http://tocstack.com:5555'
 module.exports.makeRequest = (endpoint, method, payload = null, callback) => {
 	setRequestHeader(endpoint, (err, token) => {
 		if (err) {
