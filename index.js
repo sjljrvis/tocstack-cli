@@ -12,7 +12,7 @@ const {
 	login
 } = require('./controllers/login');
 const {
-	listAllApps, fetchAppLogs, fetchAppStatus ,runAppCommand
+	listAllApps, fetchAppLogs, fetchAppStatus, runAppCommand, createApp
 } = require('./controllers/app');
 
 
@@ -51,7 +51,12 @@ program
 	.action(() => {
 		listAllApps()
 	});
-
+program
+	.command('create')
+	.description('create new app')
+	.action(appName => {
+		createApp(appName)
+	});
 program
 	.command('logs <appName>')
 	.description('See log details of your app')
@@ -69,8 +74,8 @@ program
 program
 	.command('run <appName> <command>')
 	.description('run unix command inside your app container')
-	.action((appName,command) => {
-		runAppCommand(appName,command)
+	.action((appName, command) => {
+		runAppCommand(appName, command)
 	});
 if (!process.argv.slice(2).length || !/[arudl]/.test(process.argv.slice(2))) {
 	program.outputHelp();
