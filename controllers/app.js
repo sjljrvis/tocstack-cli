@@ -85,7 +85,7 @@ const fetchAppLogs = (appName) => {
 
 const fetchAppStatus = (appName) => {
 	spinner.start();
-	makeRequest(`/monitorcontainer`, 'GET', {}, (error, result) => {
+	makeRequest(`/monitorcontainer?containerName=${appName}docker_web_1`, 'GET', {}, (error, result) => {
 		if (error) {
 			spinner.stop(1);
 			console.log(chalk.red.bold('Error connecting to tocstack'))
@@ -96,8 +96,8 @@ const fetchAppStatus = (appName) => {
 			if (result[0]) {
 				console.log(chalk.cyan.bold("Status:") + " " + chalk.cyan(result[0].State.Status));
 				console.log(chalk.cyan.bold("Process ID:") + " " + chalk.cyan(result[0].State.Pid));
-				console.log(chalk.cyan.bold("MAC address:") + " " + chalk.cyan(result[0].NetworkSettings.MacAddress));
-				console.log(chalk.cyan.bold("IP address:") + " " + chalk.cyan(result[0].NetworkSettings.IPAddress))
+				console.log(chalk.cyan.bold("MAC address:") + " " + chalk.cyan(result[0].NetworkSettings[`${appName}docker_default`] ? result[0].NetworkSettings[`${appName}docker_default`].MacAddress : 0 ));
+				console.log(chalk.cyan.bold("IP address:") + " " + chalk.cyan(result[0].NetworkSettings[`${appName}docker_default`] ? result[0].NetworkSettings[`${appName}docker_default`].IPAddress : 0 ))
 			}
 			else {
 				console.log(chalk.cyan.bold("Status:") + " " + chalk.red.bold("Error !! please try again later"));
@@ -110,7 +110,7 @@ const runAppCommand = (appName, command) => {
 	spinner.start();
 	makeRequest(`/executeCommand`, 'POST',
 		{
-			appName: appName,
+			containerName: `${appName}docker_web_1`,
 			command: command
 		}, (error, result) => {
 			if (error) {
@@ -125,5 +125,5 @@ const runAppCommand = (appName, command) => {
 };
 
 module.exports = {
-	listAllApps, fetchAppLogs, fetchAppStatus, runAppCommand, createApp
+	listAllApps, fetchAppLogs, fetchAppStatus, runAppCommand, createApp 
 };

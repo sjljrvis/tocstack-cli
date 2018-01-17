@@ -9,7 +9,7 @@ global.db = db;
 global.chalk = chalk;
 
 const {
-	login
+	login, fetchCurrentUser, logout
 } = require('./controllers/login');
 const {
 	listAllApps, fetchAppLogs, fetchAppStatus, runAppCommand, createApp
@@ -42,6 +42,18 @@ program
 		prompt(questions).then((answers) =>
 			login(answers)
 		);
+	});
+program
+	.command('logout')
+	.description('Logout current user')
+	.action(() => {
+		logout();
+	});
+program
+	.command('whoami')
+	.description('Prints current logged in user')
+	.action(() => {
+		fetchCurrentUser();
 	});
 
 program

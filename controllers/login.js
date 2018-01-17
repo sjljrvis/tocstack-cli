@@ -4,7 +4,7 @@ const login = (loginPayload) => {
 		if (error && result == null) {
 			console.log(chalk.cyan.bold('Error connecting to tocstack'))
 		}
-		else if(error && result == "Authetication failure"){
+		else if (error && result == "Authetication failure") {
 			console.log(chalk.red.bold('Fatal Authentication'))
 		}
 		else {
@@ -19,7 +19,7 @@ const login = (loginPayload) => {
 				stmt.finalize();
 				db.each("SELECT userEmail,token,date FROM token", (err, row) => {
 					console.log("================================================")
-					console.log("Token store : \n" + row.userEmail + "\n" + row.token + "\n" + row.date + "\n");
+					console.log("Token store : \n" + row.userEmail + "\n" + row.date + "\n");
 					console.log("================================================")
 				});
 			});
@@ -27,6 +27,27 @@ const login = (loginPayload) => {
 	})
 };
 
+const logout = () => {
+	db.serialize(() => {
+		db.run('DELETE from token');
+		console.log(chalk.cyan.bold('-----user-----'));
+		console.log(chalk.cyan.bold("User logged out"));
+	});
+}
+
+const fetchCurrentUser = () => {
+	db.each("SELECT userEmail FROM token", (err, row) => {
+		if (err) {
+			console.log(chalk.cyan.bold('-----user-----'));
+			console.log(chalk.cyan.red("User currently logged out"));
+		}
+		if (row) {
+			console.log(chalk.cyan.bold('-----user-----'));
+			console.log(chalk.cyan.bold(row.userEmail));
+		}
+	});
+}
+
 module.exports = {
-	login,
+	login, fetchCurrentUser, logout
 };
