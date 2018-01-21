@@ -1,7 +1,7 @@
 {
   "name": "tocstack-cli",
   "version": "0.0.1",
-  "description": "Simple cli",
+  "description": "tocstack cli for PaaS",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/sjljrvis/tocstack-cli.git"
   },
-  "author": "",
+  "author": "Sejal Chougule",
   "license": "ISC",
   "preferGlobal": true,
   "bin": {
@@ -33,16 +33,13 @@
     "mongoose": "^4.12.4",
     "promise": "^8.0.1",
     "request": "^2.83.0",
-    "sqlite3": "^3.1.13"
-  },
-  "devDependencies": {
-    "babel": "^6.23.0",
+		"sqlite3": "^3.1.13",
+		"babel": "^6.23.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-nodejs": "^6.0.0",
-    "babel-preset-stage-2": "^6.24.1",
-    "babel-register": "^6.24.1"
+    "babel-preset-stage-2": "^6.24.1"
   }
 }
