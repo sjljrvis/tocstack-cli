@@ -9,30 +9,42 @@ const login = (loginPayload) => {
 		}
 		else {
 			db.serialize(() => {
-				db.run("CREATE TABLE IF NOT EXISTS token(userEmail TEXT, token TEXT ,date TEXT)")
-				db.run('DELETE from token')
-				let stmt = db.prepare("INSERT INTO token VALUES (?,?,?)");
-				let date = new Date().toLocaleTimeString();
-				let token = result.token;
-				let userEmail = result.email;
-				stmt.run(userEmail, token, date);
-				stmt.finalize();
-				db.each("SELECT userEmail,token,date FROM token", (err, row) => {
-					console.log("================================================")
-					console.log("Login successful : \n" + row.userEmail + "\n" + row.date + "\n");
-					console.log("================================================")
+				try {
+					db.run("CREATE TABLE IF NOT EXISTS token(userEmail TEXT, token TEXT ,date TEXT)")
+					db.run('DELETE from token')
+					let stmt = db.prepare("INSERT INTO token VALUES (?,?,?)");
+					let date = new Date().toLocaleTimeString();
+					let token = result.token;
+					let userEmail = result.email;
+					stmt.run(userEmail, token, date);
+					stmt.finalize();
+					db.each("SELECT userEmail,token,date FROM token", (err, row) => {
+						console.log("================================================")
+						console.log("Login successful : \n" + row.userEmail + "\n" + row.date + "\n");
+						console.log("================================================")
+					});
+				}
+				catch (e) {
+					console.log(e);
+					console.log(chalk.cyan.red("User needs to have root permissions"));
+				}
 				});
-			});
 		}
 	})
 };
 
 const logout = () => {
-	db.serialize(() => {
-		db.run('DELETE from token');
-		console.log(chalk.cyan.bold('-----user-----'));
-		console.log(chalk.cyan.bold("User logged out"));
-	});
+	try {
+		db.serialize(() => {
+			db.run('DELETE from token');
+			console.log(chalk.cyan.bold('-----user-----'));
+			console.log(chalk.cyan.bold("User logged out"));
+		});
+	}
+	catch (e) {
+		console.log(e);
+		console.log(chalk.cyan.red("User needs to have root permissions"));
+	}
 }
 
 const fetchCurrentUser = () => {

@@ -4,10 +4,17 @@ const program = require('commander');
 const { prompt } = require('inquirer');
 const chalk = require('chalk');
 const sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('/usr/lib/node_modules/tocstack-cli/token.db');
-global.db = db;
+const path = require('path')
 global.chalk = chalk;
-
+if(process.env.USER == 'root'){
+	const dbPath = path.resolve(__dirname, 'token.db')
+	var db = new sqlite3.Database(dbPath);
+	global.db = db;
+}
+else{
+	console.log(chalk.red.bold('You need to be sudo user :('))
+	process.exit(1);
+}
 const {
 	login, fetchCurrentUser, logout
 } = require('./controllers/login');
@@ -36,7 +43,7 @@ program
 
 program
 	.command('login')
-	.description('tocstack login')
+	.description('tocstack login , User needs to be root')
 	.action(() => {
 		console.log(chalk.cyan.bold('Enter your tocstack credentials'));
 		prompt(questions).then((answers) =>
@@ -45,7 +52,7 @@ program
 	});
 program
 	.command('logout')
-	.description('Logout current user')
+	.description('Logout current user , User needs to be root')
 	.action(() => {
 		logout();
 	});

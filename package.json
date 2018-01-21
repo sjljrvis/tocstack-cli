@@ -1,6 +1,6 @@
 {
   "name": "tocstack-cli",
-  "version": "0.0.1",
+  "version": "0.0.10",
   "description": "tocstack cli for PaaS",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,11 @@
   },
   "author": "Sejal Chougule",
   "license": "ISC",
-  "preferGlobal": true,
+	"preferGlobal": true,
+	"_requiredBy": [
+    "#USER",
+    "/"
+  ],
   "bin": {
     "tocstack": "./index.js"
   },
@@ -33,8 +37,8 @@
     "mongoose": "^4.12.4",
     "promise": "^8.0.1",
     "request": "^2.83.0",
-		"sqlite3": "^3.1.13",
-		"babel": "^6.23.0",
+    "sqlite3": "~3.1.4",
+    "babel": "^6.23.0",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.25.0",
     "babel-polyfill": "^6.23.0",
